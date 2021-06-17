@@ -1,0 +1,10 @@
+@media screen and (min-width: 751px) and (max-width: 1050px) {
+    .cards {
+      justify-content: space-evenly;
+      display: grid;
+      grid-gap: 1rem;
+      grid-template-columns: auto auto;
+      /* max-width: 1700px; */
+      margin: 0 auto;
+    }
+  }
