@@ -1,6 +1,9 @@
 <template>
   <div class="header-ribbon stick-header">
     <p class="page-header">Course Library</p>
+
+    <div class="topic-select">
+    </div>
     <!-- <input type="text" class="search-box" placeholder="Search..."> -->
   </div>
   <span></span>
@@ -19,6 +22,7 @@ export default {
 
   setup() {
     console.log(navigator.onLine)
+
     const cards = ref(
         [
           {title: "Java", description: "Quis duis laboris voluptate in incididunt ut ex nulla cupidatat laboris tempor eiusmod qui. Do est labore anim commodo ipsum adipisicing consequat anim ex nulla id. Fugiat qui ipsum duis nisi sunt deserunt qui proident. Officia in magna nisi commodo minim velit exercitation consequat commodo mollit elit id qui deserunt. Consectetur ex minim tempor ut tempor sunt nisi ad deserunt exercitation est.", image: "default_course.png"},
@@ -40,12 +44,41 @@ export default {
         ]
       )
 
-    return { cards }
+      const topics = ref(
+        [
+          {id: 1, name: "Java"},
+          {id: 1, name: "Javascript"},
+          {id: 1, name: "Python"},
+          {id: 1, name: "Scala"}
+        ]
+      )
+
+    return { cards, topics }
   }
 }
 </script>
 
 <style scoped>
+.topic-select {
+  padding-top: 5px;
+  font-size: 1.2em;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.topic-filter {
+  border-radius: 20px;
+  width: 40%;
+  border: chartreuse;
+  font-size: 1em;
+  text-align: center;
+  padding: 5px;
+}
+
+.dropdown {
+  font-size: 1.2em;
+  text-align: center;
+  width: 500px;
+}
 
 .cards {
   padding-top: 120px;

@@ -2,13 +2,15 @@
     <div v-for="card in cardsList" :key="card.title">
         <div class="flip-card">
             <div class="flip-card-inner">
-                <div class="flip-card-front">
-                    <img :src="require(`@/assets/images/${card.image}`)" alt="Avatar" style="width:200px;height:200px;">
-                </div>
-                <div class="flip-card-back">
-                    <h1>{{ card.title }}</h1>
-                    <p class="truncate-text">{{ card.description }}</p>
-                </div>
+                <router-link :to="{ name: 'CourseDetails', params: { id:((card.id) ? card.id : card.title) } }">
+                    <div class="flip-card-front">
+                        <img :src="require(`@/assets/images/${card.image}`)" alt="Avatar" style="width:200px;height:200px;">
+                    </div>
+                    <div class="flip-card-back">
+                        <h1>{{ card.title }}</h1>
+                        <p class="truncate-text">{{ card.description }}</p>
+                    </div>
+                </router-link>
             </div>
         </div>
     </div>

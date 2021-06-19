@@ -29,7 +29,7 @@
 
 .copyright {
     text-align: left;
-    padding-top: 2px;
+    padding-top: 5px;
 }
 
 .col-item {
