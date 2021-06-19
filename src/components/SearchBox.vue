@@ -21,7 +21,6 @@
     </div>
 </template>
 
-
 <script>
 // Emmit events: submit, select, update
 
