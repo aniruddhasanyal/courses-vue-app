@@ -3,7 +3,8 @@
         <div class="search-input">
             <input 
                 type="text" 
-                v-model="txtInput" 
+                v-model="txtInput"
+                @keyup="emitUpdate"
                 placeholder="Type to search..">
             <div 
                 v-if="showDropdown" 
@@ -22,18 +23,20 @@
 </template>
 
 <script>
-// Emmit events: submit, select, update
-
 import { ref } from '@vue/reactivity'
 import { computed } from '@vue/runtime-core'
+
 export default {
+    
     name: 'SearchBox',
     props: ['dataList'],
-    setup(props) {
+    emits: ['update', 'select', 'submit'],
+    
+    setup(props, {emit}) {
       let txtInput = ref('')
       let clickedValue = ref('')
         
-      const suggestions = ref(props.dataList)
+      const dataList = ref(props.dataList)
 
       const showDropdown = computed(() => {
         if (txtInput.value === clickedValue) {
@@ -45,20 +48,26 @@ export default {
       })
 
       const searchSuggest = computed(() => {
-        return (txtInput.value) ? suggestions.value.filter(sugg => sugg.toLowerCase().startsWith(txtInput.value.toLowerCase())) : []
+        return (txtInput.value) ? dataList.value.filter(sugg => sugg.toLowerCase().startsWith(txtInput.value.toLowerCase())) : []
       })
 
       const handleIconClick = () => {
         let webLink = `https://www.google.com/search?q=${txtInput.value}`;
         window.open(webLink, '_blank').focus();
+        emit('submit', txtInput.value)
       }
 
       const select = (element) => {
         txtInput.value = element.currentTarget.innerText;
         clickedValue = txtInput.value
+        emit('select', clickedValue)
       }
 
-      return { txtInput, select, handleIconClick, searchSuggest, showDropdown }
+      const emitUpdate = (event) => {
+        emit('update', event.target.value)
+      }
+
+      return { txtInput, select, handleIconClick, searchSuggest, showDropdown, emitUpdate }
     }
 }
 </script>

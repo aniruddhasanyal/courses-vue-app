@@ -4,7 +4,11 @@
       <p class="page-header">Home</p>
     </div>
   </div>
-  <SearchBox :dataList="dataList"/>
+  <SearchBox 
+    :dataList="dataList" 
+    @update="logUpdate"
+    @select="logSelect"
+    @submit="logSubmit"/>
 </template>
 
 <script>
@@ -47,7 +51,19 @@ export default {
       ]
     )
 
-    return { dataList }
+    const logUpdate = (e) => {
+      console.log('homeupdate: ' + e)
+    }
+
+    const logSelect = (e) => {
+      console.log('homeselect: ' + e)
+    }
+
+    const logSubmit = (e) => {
+      console.log('homesubmit: ' + e)
+    }
+
+    return { dataList, logUpdate, logSelect, logSubmit }
   }
 }
 </script>
