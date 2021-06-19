@@ -1,15 +1,15 @@
 <template>
   <div class="wrapper">
-        <div class="search-input" ref="searchWrapper">
+        <div class="search-input">
             <input 
                 type="text" 
                 v-model="txtInput" 
                 placeholder="Type to search..">
             <div 
-                v-if="suggestList" 
+                v-if="showDropdown" 
                 class="autocom-box">
                 <ul>
-                    <li v-for="sugg in suggestList" :key="sugg" @click="select">
+                    <li v-for="sugg in searchSuggest" :key="sugg" @click="select">
                         {{ sugg }}
                     </li>
                 </ul>
@@ -21,51 +21,45 @@
     </div>
 </template>
 
+
 <script>
+// Emmit events: submit, select, update
+
 import { ref } from '@vue/reactivity'
-import { watchEffect } from '@vue/runtime-core'
+import { computed } from '@vue/runtime-core'
 export default {
     name: 'SearchBox',
     props: ['dataList'],
     setup(props) {
-        const searchWrapper = ref(null)
-        const suggestList = []
-        let txtInput = ref('')
+      let txtInput = ref('')
+      let clickedValue = ref('')
         
-        const suggestions = ref(props.dataList)
-        
-        
-        let active = true
+      const suggestions = ref(props.dataList)
 
-        watchEffect(() => {
-            if (txtInput.value && !active && suggestList) {
-                active = !active
-            } else if(txtInput.value) {
-                suggestList.length = 0;
-                suggestList.push(...suggestions.value.filter(sugg => sugg.toLowerCase().startsWith(txtInput.value.toLowerCase())));
-                if (suggestList.length) {
-                    searchWrapper.value.classList.add("active"); //show autocomplete box
-                } else {
-                    searchWrapper.value.classList.remove("active"); //hide autocomplete box
-                }
-            }else if (searchWrapper.value) {
-                 searchWrapper.value.classList.remove("active"); //hide autocomplete box
-             }
-        })
-
-        const handleIconClick = () => {
-            let webLink = `https://www.google.com/search?q=${txtInput.value}`;
-            window.open(webLink, '_blank').focus();
+      const showDropdown = computed(() => {
+        if (txtInput.value === clickedValue) {
+          return false
+        } else {
+          clickedValue = '';
+          return true
         }
+      })
 
-        const select = (element) => {
-            searchWrapper.value.classList.remove("active");
-            txtInput.value = element.currentTarget.innerText;
-            suggestList.length = 0;
-            active = false
-        }
+      const searchSuggest = computed(() => {
+        return (txtInput.value) ? suggestions.value.filter(sugg => sugg.toLowerCase().startsWith(txtInput.value.toLowerCase())) : []
+      })
 
-        return { searchWrapper, txtInput, select, suggestList, handleIconClick }
+      const handleIconClick = () => {
+        let webLink = `https://www.google.com/search?q=${txtInput.value}`;
+        window.open(webLink, '_blank').focus();
+      }
+
+      const select = (element) => {
+        txtInput.value = element.currentTarget.innerText;
+        clickedValue = txtInput.value
+      }
+
+      return { txtInput, select, handleIconClick, searchSuggest, showDropdown }
     }
 }
 </script>
@@ -103,22 +97,10 @@ export default {
   box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
 }
 
-.search-input.active input{
-  border-radius: 5px 5px 0 0;
-}
-
 .search-input .autocom-box{
-  padding: 0;
-  opacity: 0;
-  pointer-events: none;
+  pointer-events: auto;
   max-height: 280px;
   overflow-y: auto;
-}
-
-.search-input.active .autocom-box{
-  padding: 10px 8px;
-  opacity: 1;
-  pointer-events: auto;
 }
 
 .autocom-box li{
@@ -135,7 +117,7 @@ export default {
     text-align: left;
 }
 
-.search-input.active .autocom-box li{
+.search-input .autocom-box li{
   display: block;
 }
 
