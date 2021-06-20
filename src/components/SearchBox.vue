@@ -13,7 +13,8 @@
             >
                 <ul>
                     <li 
-                      v-for="(sugg, i) in searchSuggest" :key="i" 
+                      v-for="(sugg, i) in searchSuggest" 
+                      :key="i" 
                       @click="select"
                     >
                         {{ sugg }}

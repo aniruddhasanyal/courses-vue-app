@@ -1,5 +1,8 @@
 <template>
-    <div v-for="card in cardsList" :key="card.title">
+    <div 
+        v-for="card in cardsList" 
+        :key="card.title"
+    >
         <div class="flip-card">
             <div class="flip-card-inner">
                 <router-link 
