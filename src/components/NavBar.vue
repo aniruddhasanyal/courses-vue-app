@@ -1,15 +1,22 @@
 <template>
     <div class="nav stick-nav">
-        <router-link :to="{ name: 'Home' }"><i class="fa fa-fw fa-home"></i><span> Home</span></router-link>
-        <router-link :to="{ name: 'Courses' }"><i class="fa fa-leanpub" aria-hidden="true"></i><span> Courses</span></router-link>
-        <router-link :to="{ name: 'About' }"><i class="fa fa-info-circle" aria-hidden="true"></i><span> About</span></router-link>
-        <a href="#" class="login"><i class="fa fa-user" aria-hidden="true"></i><span> Login</span></a>
+        <router-link :to="{ name: 'Home' }">
+          <i class="fa fa-fw fa-home"></i><span> Home</span>
+        </router-link>
+        <router-link :to="{ name: 'Courses' }">
+          <i class="fa fa-leanpub" aria-hidden="true"></i><span> Courses</span>
+        </router-link>
+        <router-link :to="{ name: 'About' }">
+          <i class="fa fa-info-circle" aria-hidden="true"></i><span> About</span>
+        </router-link>
+        <a href="#" class="login">
+          <i class="fa fa-user" aria-hidden="true"></i><span> Login</span>
+        </a>
     </div>
 </template>
 
 
 <style>
-
 * {
   margin: 0px;
   padding: 0px;

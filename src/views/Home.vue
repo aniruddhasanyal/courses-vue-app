@@ -8,13 +8,16 @@
     :dataList="dataList" 
     @update="logUpdate"
     @select="logSelect"
-    @submit="logSubmit"/>
+    @submit="logSubmit"
+  />
 </template>
 
 <script>
 import SearchBox from '@/components/SearchBox.vue'
 import { ref } from '@vue/reactivity'
+
 export default {
+  name: 'Home',
   components: {
     SearchBox
   },

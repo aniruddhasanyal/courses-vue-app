@@ -5,12 +5,17 @@
                 type="text" 
                 v-model="txtInput"
                 @keyup="emitUpdate"
-                placeholder="Type to search..">
+                placeholder="Type to search.."
+            >
             <div 
                 v-if="showDropdown" 
-                class="autocom-box">
+                class="autocom-box"
+            >
                 <ul>
-                    <li v-for="sugg in searchSuggest" :key="sugg" @click="select">
+                    <li 
+                      v-for="(sugg, i) in searchSuggest" :key="i" 
+                      @click="select"
+                    >
                         {{ sugg }}
                     </li>
                 </ul>
@@ -27,7 +32,6 @@ import { ref } from '@vue/reactivity'
 import { computed } from '@vue/runtime-core'
 
 export default {
-    
     name: 'SearchBox',
     props: ['dataList'],
     emits: ['update', 'select', 'submit'],
@@ -36,8 +40,6 @@ export default {
       let txtInput = ref('')
       let clickedValue = ref('')
         
-      const dataList = ref(props.dataList)
-
       const showDropdown = computed(() => {
         if (txtInput.value === clickedValue) {
           return false
@@ -48,7 +50,7 @@ export default {
       })
 
       const searchSuggest = computed(() => {
-        return (txtInput.value) ? dataList.value.filter(sugg => sugg.toLowerCase().startsWith(txtInput.value.toLowerCase())) : []
+        return (txtInput.value) ? [...props.dataList].filter(sugg => sugg.toLowerCase().startsWith(txtInput.value.toLowerCase())) : []
       })
 
       const handleIconClick = () => {
@@ -67,7 +69,14 @@ export default {
         emit('update', event.target.value)
       }
 
-      return { txtInput, select, handleIconClick, searchSuggest, showDropdown, emitUpdate }
+      return { 
+        txtInput, 
+        select, 
+        handleIconClick, 
+        searchSuggest, 
+        showDropdown, 
+        emitUpdate 
+      }
     }
 }
 </script>

@@ -17,7 +17,7 @@ import { ref } from '@vue/reactivity';
 import MinimalFlipCards from '@/components/MinimalFlipCards.vue';
 
 export default {
-  name: 'Home',
+  name: 'Courses',
   components: { MinimalFlipCards },
 
   setup() {
